@@ -1,25 +1,16 @@
 import { describe, it, expect } from "vitest";
-
-describe("something truthy and falsy", () => {
-  it("true to be true", () => {
-    expect(true).toBe(true);
-  });
-
-  it("false to be false", () => {
-    expect(false).toBe(false);
-  });
-});
-
 import { render, screen } from "@testing-library/react";
-
 import App from "./App";
 
-describe("App", () => {
-  it("renders headline", () => {
-    render(<App title="React" />);
+describe("App component", () => {
+  it("renders all navigation buttons", () => {
+    render(<App />);
 
-    screen.debug();
+    const buttons = screen.getAllByRole("button");
 
-    // check if App components renders headline
+    expect(buttons).toHaveLength(3);
+    expect(buttons[0]).toHaveTextContent(/homepage/i);
+    expect(buttons[1]).toHaveTextContent(/shop/i);
+    expect(buttons[2]).toHaveTextContent(/cart/i);
   });
 });
