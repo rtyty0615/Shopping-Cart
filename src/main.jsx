@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 import RootLayout from "./RootLayout";
-import App from "./App";
+import Home from "./Home";
 import Shop from "./Shop";
 import Cart from "./Cart";
 
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />,
+        element: <Home />,
       },
       {
         path: "shop",

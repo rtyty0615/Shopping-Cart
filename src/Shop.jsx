@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Item from "./Item";
 
 const ShopContainer = styled.div`
   margin: 2rem auto;
@@ -22,6 +23,8 @@ const Shop = () => {
     <ShopContainer>
       <h1>Hello from shop page!</h1>
       <p>So, how are you?</p>
+      <Item></Item>
+      <Item></Item>
     </ShopContainer>
   );
 };
