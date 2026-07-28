@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Item from "./Item";
 import { useOutletContext } from "react-router";
+import { ListShop } from "./Item";
 
 const ShopContainer = styled.div`
   margin: 2rem auto;
@@ -20,14 +20,13 @@ const ShopContainer = styled.div`
 `;
 
 const Shop = () => {
-  const [listItem, setListItem] = useOutletContext();
+  const listItem = useOutletContext();
 
   return (
     <ShopContainer>
       <h1>Hello from shop page!</h1>
       <p>So, how are you?</p>
-      <Item></Item>
-      <Item></Item>
+      <ListShop listItem={listItem}></ListShop>
     </ShopContainer>
   );
 };

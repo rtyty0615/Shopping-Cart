@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.li`
   margin: 2rem auto;
   padding: 2rem;
 
@@ -17,12 +17,31 @@ const ItemContainer = styled.div`
   }
 `;
 
-const Item = () => {
+export function ListShop(props) {
+  return (
+    <ul>
+      {props.listItem.map((shopItem) => {
+        return (
+          <Item
+            key={shopItem.title}
+            title={shopItem.title}
+            price={shopItem.price}
+            description={shopItem.description}
+            imgSrc={shopItem.imgSrc}
+          />
+        );
+      })}
+    </ul>
+  );
+}
+
+const Item = ({ title, price, description, imgSrc }) => {
   return (
     <ItemContainer>
-      <img></img>
-      <h2>Item</h2>
-      <p>$129.99</p>
+      <img src={imgSrc} alt={title}></img>
+      <h2>{title}</h2>
+      <h3>$ {price}</h3>
+      <p>{description}</p>
     </ItemContainer>
   );
 };

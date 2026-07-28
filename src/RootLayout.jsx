@@ -3,7 +3,7 @@ import GlobalStyles from "./GlobalStyles";
 import Container from "./Container";
 import { Navigation } from "./Nav";
 import { useState, useEffect } from "react";
-import { initialListItem } from "./listItem";
+import { initialListItem } from "./initialItem";
 
 export default function RootLayout() {
   const [listItem, setListItem] = useState(initialListItem);
@@ -63,7 +63,7 @@ export default function RootLayout() {
       ) : error ? (
         <p>A network error was encountered</p>
       ) : (
-        <Outlet context={[listItem, setListItem]} />
+        <Outlet context={listItem} />
       )}
     </>
   );
