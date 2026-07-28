@@ -6,11 +6,13 @@ import RootLayout from "./RootLayout";
 import Home from "./Home";
 import ItemPage from "./ItemPage";
 import Cart from "./Cart";
+import ErrorPage from "./ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
