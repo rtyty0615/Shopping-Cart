@@ -13,9 +13,9 @@ export default function RootLayout() {
   useEffect(() => {
     async function fetchListItem() {
       try {
-        const promises = initialListItem.map(async (shopItem, index) => {
+        const promises = initialListItem.map(async (shopItem) => {
           const response = await fetch(
-            "https://fakestoreapi.com/products/" + (index + 1),
+            "https://fakestoreapi.com/products/" + shopItem.id,
           );
           console.log(response);
 

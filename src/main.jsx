@@ -6,6 +6,7 @@ import RootLayout from "./RootLayout";
 import Home from "./Home";
 import Shop from "./Shop";
 import Cart from "./Cart";
+import Backpack from "./card/Backpack";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,13 @@ const router = createBrowserRouter([
       },
       {
         path: "shop",
-        element: <Shop />,
+        children: [
+          { index: true, element: <Shop /> },
+          {
+            path: "backpack",
+            element: <Backpack />,
+          },
+        ],
       },
       {
         path: "cart",

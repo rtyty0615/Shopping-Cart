@@ -35,13 +35,14 @@ export function ListShop(props) {
   );
 }
 
-const Item = ({ title, price, description, imgSrc }) => {
+const Item = ({ title, price, imgSrc }) => {
   return (
     <ItemContainer>
-      <img src={imgSrc} alt={title}></img>
-      <h2>{title}</h2>
-      <h3>$ {price}</h3>
-      <p>{description}</p>
+      <button>
+        <img src={imgSrc} alt={title}></img>
+        <h2>{title}</h2>
+        <h3>$ {price}</h3>
+      </button>
     </ItemContainer>
   );
 };

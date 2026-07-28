@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useOutletContext } from "react-router";
+import { Outlet, useOutletContext } from "react-router";
 import { ListShop } from "./Item";
 
 const ShopContainer = styled.div`
@@ -27,6 +27,7 @@ const Shop = () => {
       <h1>Hello from shop page!</h1>
       <p>So, how are you?</p>
       <ListShop listItem={listItem}></ListShop>
+      <Outlet context={listItem} />
     </ShopContainer>
   );
 };
