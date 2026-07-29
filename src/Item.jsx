@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router";
 
 const ItemContainer = styled.li`
   margin: 2rem auto;
@@ -23,7 +24,8 @@ export function ListShop(props) {
       {props.listItem.map((shopItem) => {
         return (
           <Item
-            key={shopItem.title}
+            key={shopItem.name}
+            name={shopItem.name}
             title={shopItem.title}
             price={shopItem.price}
             description={shopItem.description}
@@ -35,14 +37,14 @@ export function ListShop(props) {
   );
 }
 
-const Item = ({ title, price, imgSrc }) => {
+const Item = ({ name, title, price, imgSrc }) => {
   return (
     <ItemContainer>
-      <button>
+      <Link to={`/shop/${name}`}>
         <img src={imgSrc} alt={title}></img>
         <h2>{title}</h2>
         <h3>$ {price}</h3>
-      </button>
+      </Link>
     </ItemContainer>
   );
 };
