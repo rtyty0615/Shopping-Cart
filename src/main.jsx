@@ -6,6 +6,7 @@ import RootLayout from "./RootLayout";
 import Home from "./Home";
 import ItemPage from "./ItemPage";
 import Cart from "./Cart";
+import Shop from "./Shop";
 import ErrorPage from "./ErrorPage";
 
 const router = createBrowserRouter([
@@ -19,8 +20,14 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "shop/:itemName",
-        element: <ItemPage />,
+        path: "shop",
+        children: [
+          { index: true, element: <Shop /> },
+          {
+            path: ":itemName",
+            element: <ItemPage />,
+          },
+        ],
       },
       {
         path: "cart",
