@@ -63,7 +63,7 @@ export default function RootLayout() {
       ) : error ? (
         <p>A network error was encountered</p>
       ) : (
-        <Outlet context={listItem} />
+        <Outlet context={[listItem, setListItem]} />
       )}
     </>
   );

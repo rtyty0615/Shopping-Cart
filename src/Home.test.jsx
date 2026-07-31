@@ -1,16 +1,30 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 import Home from "./Home";
 
-describe("App component", () => {
-  it("renders all navigation buttons", () => {
-    render(<Home />);
+describe("Home component", () => {
+  it("renders heading", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
 
-    const buttons = screen.getAllByRole("button");
+    expect(
+      screen.getByRole("heading", { name: /hello from home page!/i }),
+    ).toBeDefined();
+  });
 
-    expect(buttons).toHaveLength(3);
-    expect(buttons[0]).toHaveTextContent(/homepage/i);
-    expect(buttons[1]).toHaveTextContent(/shop/i);
-    expect(buttons[2]).toHaveTextContent(/cart/i);
+  it("renders the shop link with correct destination", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const link = screen.getByRole("link", { name: /shop now/i });
+    expect(link).toBeDefined();
+    expect(link.getAttribute("href")).toBe("/shop");
   });
 });

@@ -6,6 +6,7 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
   {
     id: 15,
@@ -38,6 +42,7 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
   {
     id: 16,
@@ -46,5 +51,6 @@ export const initialListItem = [
     price: "",
     description: "",
     imgSrc: null,
+    cartSum: 0,
   },
 ];
