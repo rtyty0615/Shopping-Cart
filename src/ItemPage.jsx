@@ -53,6 +53,7 @@ const ItemInfo = ({ itemPath, listItem, setListItem }) => {
       }),
     );
     console.log(listItem[0].cartSum);
+    console.log(listItem);
   }
 
   return (

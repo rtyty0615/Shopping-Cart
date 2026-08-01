@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useOutletContext } from "react-router";
 import ListCart from "./ListCart";
 
 const CartContainer = styled.div`
@@ -14,14 +13,12 @@ const CartContainer = styled.div`
 `;
 
 const Cart = () => {
-  const [listItem] = useOutletContext();
-
   return (
     <>
       <CartContainer>
         <h1>YOUR CART</h1>
         <hr></hr>
-        <ListCart listItem={listItem}></ListCart>
+        <ListCart></ListCart>
       </CartContainer>
     </>
   );
