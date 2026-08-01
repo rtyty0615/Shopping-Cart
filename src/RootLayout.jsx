@@ -55,7 +55,7 @@ export default function RootLayout() {
     <>
       <GlobalStyles />
       <Container>
-        <Navigation />
+        <Navigation listItem={listItem} />
       </Container>
 
       {loading ? (

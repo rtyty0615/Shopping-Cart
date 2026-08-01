@@ -21,7 +21,7 @@ const ItemPage = () => {
     </>
   );
 };
-const ItemInfo = ({ itemPath, listItem, setListItem }) => {
+const ItemInfo = ({ itemPath, setListItem }) => {
   const [cartNum, setCartNum] = useState(1);
 
   function handleAddClick() {
@@ -42,7 +42,6 @@ const ItemInfo = ({ itemPath, listItem, setListItem }) => {
   }
 
   function handleCartClick() {
-    console.log(itemPath.name);
     setListItem((prev) =>
       prev.map((item) => {
         if (item.name === itemPath.name) {
@@ -52,8 +51,6 @@ const ItemInfo = ({ itemPath, listItem, setListItem }) => {
         return item;
       }),
     );
-    console.log(listItem[0].cartSum);
-    console.log(listItem);
   }
 
   return (
