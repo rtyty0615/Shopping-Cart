@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useOutletContext } from "react-router";
+import ListCart from "./ListCart";
 
 const CartContainer = styled.div`
   margin: 2rem auto;
@@ -9,20 +11,19 @@ const CartContainer = styled.div`
     color: #1a1a1a;
     margin-bottom: 0.5rem;
   }
-
-  p {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
-  }
 `;
 
 const Cart = () => {
+  const [listItem] = useOutletContext();
+
   return (
-    <CartContainer>
-      <h1>Hello from cart page!</h1>
-      <p>So, how are you?</p>
-    </CartContainer>
+    <>
+      <CartContainer>
+        <h1>YOUR CART</h1>
+        <hr></hr>
+        <ListCart listItem={listItem}></ListCart>
+      </CartContainer>
+    </>
   );
 };
 

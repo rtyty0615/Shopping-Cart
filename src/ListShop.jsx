@@ -49,4 +49,4 @@ const Item = ({ name, title, price, imgSrc }) => {
   );
 };
 
-export default Item;
+export default ListShop;

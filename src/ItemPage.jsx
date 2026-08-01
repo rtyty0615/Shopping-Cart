@@ -63,11 +63,11 @@ const ItemInfo = ({ itemPath, listItem, setListItem }) => {
       <p>{itemPath.description}</p>
       <div>
         <button onClick={handleMinusClick}>-</button>
-        <label htmlFor="firstName"></label>
+        <label htmlFor={itemPath.name}></label>
         <input
           type="number"
-          id="firstName"
-          name="firstName"
+          id={itemPath.name}
+          name={itemPath.name}
           value={cartNum}
           onChange={handleInputChange}
         ></input>
