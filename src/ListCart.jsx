@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link, useOutletContext } from "react-router";
+import { useState } from "react";
 
 const CartItemContainer = styled.li`
   margin: 2rem auto;
@@ -45,42 +46,50 @@ export function ListCart() {
 }
 
 const CartItem = ({ name, title, price, imgSrc, setListItem, cartSum }) => {
+  const [inputValue, setInputValue] = useState(cartSum);
+  const [prevCartSum, setPrevCartSum] = useState(cartSum);
+
+  if (cartSum !== prevCartSum) {
+    setPrevCartSum(cartSum);
+    setInputValue(cartSum);
+  }
+
   function handleAddClick() {
-    console.log(name);
     setListItem((prev) =>
-      prev.map((item) => {
-        if (item.name === name) {
-          let prevCartSum = item.cartSum;
-          return { ...item, cartSum: prevCartSum + 1 };
-        }
-        return item;
-      }),
+      prev.map((item) =>
+        item.name === name ? { ...item, cartSum: item.cartSum + 1 } : item,
+      ),
     );
   }
 
   function handleMinusClick() {
-    console.log(name);
     setListItem((prev) =>
-      prev.map((item) => {
-        if (item.name === name) {
-          let prevCartSum = item.cartSum;
-          return { ...item, cartSum: prevCartSum - 1 };
-        }
-        return item;
-      }),
+      prev.map((item) =>
+        item.name === name ? { ...item, cartSum: item.cartSum - 1 } : item,
+      ),
+    );
+  }
+
+  function handleRemoveClick() {
+    setListItem((prev) =>
+      prev.map((item) => (item.name === name ? { ...item, cartSum: 0 } : item)),
     );
   }
 
   function handleInputChange(e) {
-    const numericValue = e.target.valueAsNumber;
+    setInputValue(e.target.value);
+  }
+
+  function handleBlur() {
+    let numericValue = parseInt(inputValue, 10);
 
     if (Number.isNaN(numericValue)) {
-      setListItem((prev) =>
-        prev.map((item) =>
-          item.name === name ? { ...item, cartSum: 1 } : item,
-        ),
-      );
-      return;
+      numericValue = 1;
+      setInputValue(1);
+    }
+
+    if (numericValue <= 0) {
+      numericValue = 0;
     }
 
     setListItem((prev) =>
@@ -90,16 +99,10 @@ const CartItem = ({ name, title, price, imgSrc, setListItem, cartSum }) => {
     );
   }
 
-  function handleRemoveClick() {
-    console.log(name);
-    setListItem((prev) =>
-      prev.map((item) => {
-        if (item.name === name) {
-          return { ...item, cartSum: 0 };
-        }
-        return item;
-      }),
-    );
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
   }
 
   return (
@@ -116,8 +119,10 @@ const CartItem = ({ name, title, price, imgSrc, setListItem, cartSum }) => {
           type="number"
           id={name}
           name={name}
-          value={cartSum}
+          value={inputValue}
           onChange={handleInputChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
         ></input>
         <button onClick={handleAddClick}>+</button>
       </div>
