@@ -21,26 +21,35 @@ const CartItemContainer = styled.li`
 
 export function ListCart() {
   const [listItem, setListItem] = useOutletContext();
+
+  const activeCartItems = listItem.filter((item) => item.cartSum > 0);
+
+  const subtotal = activeCartItems.reduce(
+    (sum, item) => sum + item.price * item.cartSum,
+    0,
+  );
+
   return (
     <>
       <ul>
-        {listItem
-          .filter((item) => item.cartSum > 0)
-          .map((cartItem) => {
-            return (
-              <CartItem
-                key={cartItem.name}
-                name={cartItem.name}
-                title={cartItem.title}
-                price={cartItem.price}
-                imgSrc={cartItem.imgSrc}
-                setListItem={setListItem}
-                cartSum={cartItem.cartSum}
-              />
-            );
-          })}
+        {activeCartItems.map((cartItem) => (
+          <CartItem
+            key={cartItem.name}
+            name={cartItem.name}
+            title={cartItem.title}
+            price={cartItem.price}
+            imgSrc={cartItem.imgSrc}
+            setListItem={setListItem}
+            cartSum={cartItem.cartSum}
+          />
+        ))}
       </ul>
-      <button>PROCEED TO CHECKOUT</button>
+      <hr></hr>
+      <h2>Subtotal: ${subtotal.toFixed(2)}</h2>
+      <hr></hr>
+      <a href="https://youtu.be/NuyqYp4vv4Q?si=ZTtgckdWl0JTeGbP">
+        PROCEED TO CHECKOUT
+      </a>
     </>
   );
 }
