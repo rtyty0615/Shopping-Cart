@@ -31,25 +31,34 @@ export function ListCart() {
 
   return (
     <>
-      <ul>
-        {activeCartItems.map((cartItem) => (
-          <CartItem
-            key={cartItem.name}
-            name={cartItem.name}
-            title={cartItem.title}
-            price={cartItem.price}
-            imgSrc={cartItem.imgSrc}
-            setListItem={setListItem}
-            cartSum={cartItem.cartSum}
-          />
-        ))}
-      </ul>
-      <hr></hr>
-      <h2>Subtotal: ${subtotal.toFixed(2)}</h2>
-      <hr></hr>
-      <a href="https://youtu.be/NuyqYp4vv4Q?si=ZTtgckdWl0JTeGbP">
-        PROCEED TO CHECKOUT
-      </a>
+      {subtotal !== 0 ? (
+        <>
+          <ul>
+            {activeCartItems.map((cartItem) => (
+              <CartItem
+                key={cartItem.name}
+                name={cartItem.name}
+                title={cartItem.title}
+                price={cartItem.price}
+                imgSrc={cartItem.imgSrc}
+                setListItem={setListItem}
+                cartSum={cartItem.cartSum}
+              />
+            ))}
+          </ul>
+          <hr></hr>
+          <h2>Subtotal: ${subtotal.toFixed(2)}</h2>
+          <hr></hr>
+          <a href="https://youtu.be/NuyqYp4vv4Q?si=ZTtgckdWl0JTeGbP">
+            PROCEED TO CHECKOUT
+          </a>
+        </>
+      ) : (
+        <>
+          <h3>There are currently no items in your cart.</h3>
+          <Link to={`/shop`}>Continue Shopping</Link>
+        </>
+      )}
     </>
   );
 }
