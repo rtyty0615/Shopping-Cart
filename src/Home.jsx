@@ -25,13 +25,14 @@ const HomeContainer = styled.section`
   }
 
   a {
-    color: #5f2e00;
-    text-decoration: none;
-    font-size: 2.4rem;
-    font-weight: bold;
+    all: unset;
+    cursor: pointer;
+    background-color: #5f2e00;
+    color: white;
     margin: 0 1em;
-    padding: 0.25em 1em;
-
+    padding: 0.6em 3rem;
+    font-size: 1.5rem;
+    border-radius: 8px;
     &:hover {
       opacity: 0.8;
     }
@@ -42,7 +43,7 @@ function Home() {
   return (
     <HomeContainer>
       <h1>Warm Up Your Style with Cold-Weather Savings</h1>
-      <Link to="shop">Shop Now</Link>
+      <Link to="shop">SHOP NOW</Link>
     </HomeContainer>
   );
 }

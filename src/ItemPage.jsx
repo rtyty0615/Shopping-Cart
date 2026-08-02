@@ -1,6 +1,7 @@
 import { Link, useParams, useOutletContext } from "react-router";
 import Shop from "./Shop";
 import { useState } from "react";
+import styled from "styled-components";
 
 const ItemPage = () => {
   const { itemName } = useParams();
@@ -21,6 +22,93 @@ const ItemPage = () => {
     </>
   );
 };
+
+const ItemInfoContainer = styled.div`
+  margin: 2rem auto;
+  padding: 5rem 30rem;
+  color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+
+  h2 {
+    font-size: 2.8rem;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    color: #5f2e00;
+  }
+
+  p {
+    font-size: 1.6rem;
+    line-height: 1.6;
+  }
+  hr {
+    margin: 1rem 0;
+  }
+`;
+
+const RightSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 1.5rem;
+  a {
+    text-decoration: none;
+    color: #5f2e00;
+    margin: auto;
+    font-weight: bold;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  button {
+    all: unset;
+    cursor: pointer;
+    background-color: #5f2e00;
+    color: white;
+    margin: auto;
+    padding: 18px 30px;
+    border-radius: 8px;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
+const AddCartController = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #5f2e00;
+  input {
+    width: 70px;
+    height: 50px;
+    font-size: 1.8rem;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: -5px;
+  }
+  button {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    height: 55px;
+    line-height: 1;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
 const ItemInfo = ({ itemPath, setListItem }) => {
   const [cartNum, setCartNum] = useState(1);
 
@@ -54,26 +142,29 @@ const ItemInfo = ({ itemPath, setListItem }) => {
   }
 
   return (
-    <>
+    <ItemInfoContainer>
       <img src={itemPath.imgSrc} alt={itemPath.title}></img>
-      <h2>{itemPath.title}</h2>
-      <h3>$ {itemPath.price}</h3>
-      <p>{itemPath.description}</p>
-      <div>
-        <button onClick={handleMinusClick}>-</button>
-        <label htmlFor={itemPath.name}></label>
-        <input
-          type="number"
-          id={itemPath.name}
-          name={itemPath.name}
-          value={cartNum}
-          onChange={handleInputChange}
-        ></input>
-        <button onClick={handleAddClick}>+</button>
-      </div>
-      <button onClick={handleCartClick}>Add to cart</button>
-      <Link to="/shop">Go back</Link>
-    </>
+      <RightSection>
+        <h2>{itemPath.title}</h2>
+        <h3>$ {itemPath.price}</h3>
+        <p>{itemPath.description}</p>
+        <hr></hr>
+        <AddCartController>
+          <button onClick={handleMinusClick}>-</button>
+          <label htmlFor={itemPath.name}></label>
+          <input
+            type="number"
+            id={itemPath.name}
+            name={itemPath.name}
+            value={cartNum}
+            onChange={handleInputChange}
+          ></input>
+          <button onClick={handleAddClick}>+</button>
+        </AddCartController>
+        <button onClick={handleCartClick}>ADD TO CART</button>
+        <Link to="/shop">GO BACK</Link>
+      </RightSection>
+    </ItemInfoContainer>
   );
 };
 

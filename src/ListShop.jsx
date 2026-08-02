@@ -28,7 +28,7 @@ const ItemContainer = styled.li`
     text-align: center;
     gap: 10px;
     box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
-    border-radius: 5%;
+    border-radius: 8px;
     width: 100%;
     height: 100%;
     padding: 10px 30px;
