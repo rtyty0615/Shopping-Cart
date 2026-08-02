@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ListCart from "./ListCart";
 
-const CartContainer = styled.div`
+const CartContainer = styled.section`
   margin: 2rem auto;
   padding: 2rem;
 

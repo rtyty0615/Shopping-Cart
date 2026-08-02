@@ -8,8 +8,8 @@ const Nav = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
-  background: #a15814;
+  padding: 20px;
+  background: #5f2e00;
   width: 100%;
 
   img {

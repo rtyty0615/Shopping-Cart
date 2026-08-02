@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useOutletContext } from "react-router";
 import { ListShop } from "./ListShop";
 
-const ShopContainer = styled.div`
+const ShopContainer = styled.section`
   margin: 2rem auto;
   padding: 2rem;
 
