@@ -36,9 +36,6 @@ const HomeContainer = styled.section`
       opacity: 0.8;
     }
   }
-
-  img {
-  }
 `;
 
 function Home() {
