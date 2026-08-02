@@ -23,6 +23,7 @@ const NavLink = styled(Link)`
   color: #ffffff;
   text-decoration: none;
   font-size: 2.5rem;
+  font-weight: bold;
   margin: 0 1em;
   padding: 0.25em 1em;
 
@@ -32,7 +33,6 @@ const NavLink = styled(Link)`
 `;
 
 const HomeLink = styled(NavLink)`
-  font-weight: bold;
   font-size: 3rem;
   color: #ffffff;
 `;
@@ -76,7 +76,7 @@ export function Navigation({ listItem }) {
       <Container>
         <NavLink to="shop">Shop</NavLink>
         <StyledCartLink to="cart">
-          <img src={cartIcon}></img>
+          <img src={cartIcon} alt="Cart"></img>
           {totalItem !== 0 && <CartBadge>{totalItem}</CartBadge>}
         </StyledCartLink>
       </Container>

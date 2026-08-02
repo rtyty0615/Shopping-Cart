@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router";
+import winterPhoto from "./image/winter.jpg";
 
 const HomeContainer = styled.div`
   margin: 2rem auto;
@@ -9,12 +10,6 @@ const HomeContainer = styled.div`
     font-size: 1.8rem;
     color: #1a1a1a;
     margin-bottom: 0.5rem;
-  }
-
-  p {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
   }
 
   a {
@@ -28,14 +23,17 @@ const HomeContainer = styled.div`
       opacity: 0.8;
     }
   }
+
+  img {
+  }
 `;
 
 function Home() {
   return (
     <HomeContainer>
-      <h1>Hello from home page!</h1>
-      <p>So, how are you?</p>
+      <h1>Warm Up Your Style with Cold-Weather Savings</h1>
       <Link to="shop">Shop Now</Link>
+      <img src={winterPhoto} alt="A snowy plain and hills during winter"></img>
     </HomeContainer>
   );
 }
