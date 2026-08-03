@@ -81,23 +81,44 @@ const RightSection = styled.div`
 `;
 
 const ItemInfo = ({ itemPath, setListItem }) => {
+  const [inputValue, setInputValue] = useState(1);
   const [cartNum, setCartNum] = useState(1);
 
   function handleAddClick() {
+    setInputValue(cartNum + 1);
     setCartNum(cartNum + 1);
   }
 
   function handleMinusClick() {
-    setCartNum(cartNum - 1);
+    if (cartNum > 0) {
+      setInputValue(cartNum - 1);
+      setCartNum(cartNum - 1);
+    }
   }
 
   function handleInputChange(e) {
-    const val = e.target.value;
-    if (val === "") {
-      setCartNum(1);
-      return;
+    setInputValue(e.target.value);
+  }
+
+  function handleBlur() {
+    let numericValue = parseInt(inputValue, 10);
+
+    if (Number.isNaN(numericValue)) {
+      numericValue = 1;
     }
-    setCartNum(parseInt(val, 10));
+
+    if (numericValue <= 0) {
+      numericValue = 0;
+    }
+
+    setInputValue(numericValue);
+    setCartNum(numericValue);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
   }
 
   function handleCartClick() {
@@ -127,8 +148,10 @@ const ItemInfo = ({ itemPath, setListItem }) => {
             type="number"
             id={itemPath.name}
             name={itemPath.name}
-            value={cartNum}
+            value={inputValue}
             onChange={handleInputChange}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
           ></input>
           <button onClick={handleAddClick}>+</button>
         </AddCartController>
