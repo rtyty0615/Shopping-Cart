@@ -3,12 +3,13 @@ import ListCart from "./ListCart";
 
 const CartContainer = styled.section`
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 5rem 30rem;
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 2.8rem;
     color: #1a1a1a;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
   }
 `;
 
