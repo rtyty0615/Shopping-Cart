@@ -12,7 +12,9 @@ describe("Home component", () => {
     );
 
     expect(
-      screen.getByRole("heading", { name: /hello from home page!/i }),
+      screen.getByRole("heading", {
+        name: /Warm Up Your Style with Cold-Weather Savings/i,
+      }),
     ).toBeDefined();
   });
 

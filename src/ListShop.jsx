@@ -49,10 +49,17 @@ const ItemContainer = styled.li`
   }
 `;
 
-export function ListShop(props) {
+export function ListShop({ listItem = [] }) {
+  if (listItem.length === 0) {
+    return (
+      <ShopItemContainer>
+        <p className="empty-state">No products found.</p>
+      </ShopItemContainer>
+    );
+  }
   return (
     <ShopItemContainer>
-      {props.listItem.map((shopItem) => {
+      {listItem.map((shopItem) => {
         return (
           <Item
             key={shopItem.name}
@@ -68,7 +75,7 @@ export function ListShop(props) {
   );
 }
 
-const Item = ({ name, title, price, imgSrc }) => {
+export const Item = ({ name, title, price, imgSrc }) => {
   return (
     <ItemContainer>
       <Link to={`/shop/${name}`}>

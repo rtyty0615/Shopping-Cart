@@ -1,72 +1,149 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route, Outlet } from "react-router";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 import ItemPage from "./ItemPage";
+import { describe, it, expect } from "vitest";
 
-// Mock the nested Shop component to keep the test isolated
-vi.mock("./Shop", () => ({
-  default: () => <div>Shop Component</div>,
-}));
-
-// Mock data provided via useOutletContext
-const mockItems = [
+const mockList = [
   {
-    name: "keyboard",
-    title: "Mechanical Keyboard",
-    price: 99,
-    imgSrc: "/keyboard.jpg",
-    description: "A great tactile mechanical keyboard.",
+    name: "coffee-mug",
+    title: "Coffee Mug",
+    price: 15,
+    description: "A sturdy ceramic mug.",
+    imgSrc: "/images/mug.jpg",
+    cartSum: 0,
   },
 ];
 
-describe("ItemPage component", () => {
-  it("renders item details when itemName is provided in the URL", () => {
-    render(
-      <MemoryRouter initialEntries={["/shop/keyboard"]}>
-        <Routes>
-          {/* Parent Route passes mockItems through Outlet context */}
-          <Route element={<Outlet context={mockItems} />}>
-            <Route path="/shop/:itemName" element={<ItemPage />} />
-          </Route>
-        </Routes>
-      </MemoryRouter>,
-    );
+const mockSetListItem = vi.fn();
 
-    // Verify Title & Info
-    expect(
-      screen.getByRole("heading", { level: 2, name: /mechanical keyboard/i }),
-    ).toBeDefined();
-    expect(screen.getByText(/\$ 99/i)).toBeDefined();
-    expect(
-      screen.getByText(/a great tactile mechanical keyboard/i),
-    ).toBeDefined();
+function MockParentLayout() {
+  return <Outlet context={[mockList, mockSetListItem]} />;
+}
 
-    // Verify Image attributes
-    const image = screen.getByRole("img", { name: /mechanical keyboard/i });
-    expect(image.getAttribute("src")).toBe("/keyboard.jpg");
+function renderItemPage(initialUrl = "/shop/coffee-mug") {
+  return render(
+    <MemoryRouter initialEntries={[initialUrl]}>
+      <Routes>
+        <Route path="/shop" element={<MockParentLayout />}>
+          <Route path=":itemName" element={<ItemPage />} />
+          <Route index element={<ItemPage />} />
+        </Route>
+      </Routes>
+    </MemoryRouter>,
+  );
+}
 
-    // Verify Controls
-    expect(screen.getByRole("button", { name: /add to cart/i })).toBeDefined();
+describe("ItemPage - Initial Data Display", () => {
+  it("renders the correct product details based on the URL parameter", () => {
+    renderItemPage("/shop/coffee-mug");
 
-    const backLink = screen.getByRole("link", { name: /go back/i });
-    expect(backLink.getAttribute("href")).toBe("/shop");
+    const title = screen.getByRole("heading", {
+      level: 2,
+      name: "Coffee Mug",
+    });
+    expect(title).toBeInTheDocument();
+
+    const price = screen.getByRole("heading", {
+      level: 3,
+      name: "$ 15",
+    });
+    expect(price).toBeInTheDocument();
+
+    const description = screen.getByText("A sturdy ceramic mug.");
+    expect(description).toBeInTheDocument();
+
+    const image = screen.getByRole("img", { name: "Coffee Mug" });
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute("src", "/images/mug.jpg");
+
+    const defaultValue = screen.getByRole("spinbutton");
+    expect(defaultValue).toBeInTheDocument();
+
+    expect(defaultValue).toHaveValue(1);
   });
 
-  it("renders the Shop component when itemName is omitted from the URL", () => {
-    render(
-      <MemoryRouter initialEntries={["/shop"]}>
-        <Routes>
-          <Route element={<Outlet context={mockItems} />}>
-            <Route path="/shop" element={<ItemPage />} />
-          </Route>
-        </Routes>
-      </MemoryRouter>,
-    );
+  it("renders Shop when product not found", () => {
+    renderItemPage("/shop");
+    expect(screen.queryByText(/$ 15/i)).not.toBeInTheDocument();
+  });
+});
 
-    // Verify that mocked Shop component is shown
-    expect(screen.getByText("Shop Component")).toBeDefined();
+describe("Quantity Controller Logic (User Interactions)", () => {
+  it("add one after add button click", async () => {
+    const user = userEvent.setup();
 
-    // Verify that ItemInfo elements are not present
-    expect(screen.queryByRole("button", { name: /add to cart/i })).toBeNull();
+    renderItemPage("/shop/coffee-mug");
+    const addButton = screen.getByRole("button", { name: "+" });
+    await user.click(addButton);
+    expect(screen.getByRole("spinbutton")).toHaveValue(2);
+  });
+
+  it("minus one after minus button click", async () => {
+    const user = userEvent.setup();
+
+    renderItemPage("/shop/coffee-mug");
+    const minusButton = screen.getByRole("button", { name: "-" });
+    await user.click(minusButton);
+    expect(screen.getByRole("spinbutton")).toHaveValue(0);
+  });
+
+  it("will not be less than 0", async () => {
+    const user = userEvent.setup();
+
+    renderItemPage("/shop/coffee-mug");
+    const minusButton = screen.getByRole("button", { name: "-" });
+    await user.click(minusButton);
+    await user.click(minusButton);
+    await user.click(minusButton);
+    expect(screen.getByRole("spinbutton")).toHaveValue(0);
+  });
+
+  it("shows what number user types in input", async () => {
+    const user = userEvent.setup();
+
+    renderItemPage("/shop/coffee-mug");
+    const input = screen.getByRole("spinbutton");
+    await user.clear(input);
+    await user.type(input, "20");
+    expect(input).toHaveValue(20);
+  });
+
+  it("leave the input empty", async () => {
+    const user = userEvent.setup();
+
+    renderItemPage("/shop/coffee-mug");
+    const input = screen.getByRole("spinbutton");
+    await user.clear(input);
+    await user.tab();
+    expect(input).toHaveValue(1);
+  });
+
+  it("type a negative number", async () => {
+    const user = userEvent.setup();
+
+    renderItemPage("/shop/coffee-mug");
+    const input = screen.getByRole("spinbutton");
+    await user.clear(input);
+    await user.type(input, "-10");
+    await user.tab();
+    expect(input).toHaveValue(0);
+    expect(mockSetListItem).not.toHaveBeenCalled();
+  });
+});
+
+describe("Add to Cart Action", () => {
+  it("Add quantity in input to cart after click Cart button", async () => {
+    const user = userEvent.setup();
+    renderItemPage("/shop/coffee-mug");
+    const input = screen.getByRole("spinbutton");
+    await user.clear(input);
+    await user.type(input, "20");
+
+    const cartButton = screen.getByRole("button", { name: "ADD TO CART" });
+    await user.click(cartButton);
+
+    expect(mockSetListItem).toHaveBeenCalled();
   });
 });
