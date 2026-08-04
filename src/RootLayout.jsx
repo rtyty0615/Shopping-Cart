@@ -17,7 +17,6 @@ export default function RootLayout() {
           const response = await fetch(
             "https://fakestoreapi.com/products/" + shopItem.id,
           );
-          console.log(response);
 
           if (response.status >= 500) {
             throw new Error("Server error");
